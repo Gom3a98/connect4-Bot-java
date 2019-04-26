@@ -20,8 +20,6 @@ public class main {
         return (int) array.elementAt(rnd);
     }
 
-
-
     public static Vector<Integer> getlocation(char[][] board) {
         Vector<Integer> valid_locations = new Vector<>();
         for (int i = 0; i < COLUMN_COUNT; i++) {
@@ -60,7 +58,7 @@ public class main {
         } else if (counter == 2 && counterempty == 2) {
             score += 2;
         } else if (counteropp == 3 && counterempty == 1) {
-            score -= 4;
+            score -= 10000;
         }
         return score;
     }
@@ -156,6 +154,7 @@ public class main {
                     return arr;
                 } else if (test(board, PLAYER_PIECE)) {
                     int[] arr = new int[2];
+                    System.out.println("will win");
                     arr[0] = -1;
                     arr[1] = -1000000000;
 
@@ -258,8 +257,8 @@ public class main {
         while (true) {
             int x;
 
-            x = minimax(board, 5, (int) -Double.POSITIVE_INFINITY, (int) Double.POSITIVE_INFINITY, true)[0];
-            System.out.println("Player one put on : " + x);
+            x = minimax(board, 1, (int) -Double.POSITIVE_INFINITY, (int) Double.POSITIVE_INFINITY, true)[0];
+            System.out.println("Player one put on : " + x+6);
             
             if (board[ROW_COUNT - 1][x] == ' ') {
                 board[s[x]][x] = 'x';
@@ -272,23 +271,23 @@ public class main {
                 return;
             }
             
-             x = minimax(board, 10, (int) -Double.POSITIVE_INFINITY, (int) Double.POSITIVE_INFINITY, true)[0];
-          
-            System.out.println("Player two put on : " + x);
-            if (board[ROW_COUNT - 1][x] == ' ') {
-                board[s[x]][x] = 'o';
-                s[x]++;
-            }
-           
-//            System.out.print("player two drob where: ");
-//            x = input.nextInt();
-//            x--;
-//
-//            if (board[ROW_COUNT - 1][6 - x] == ' ') {
-//
-//                board[s[6 - x]][6 - x] = 'o';
-//                s[6 - x]++;
+//             x = minimax(board, 10, (int) -Double.POSITIVE_INFINITY, (int) Double.POSITIVE_INFINITY, true)[0];
+//          
+//            System.out.println("Player two put on : " + x);
+//            if (board[ROW_COUNT - 1][x] == ' ') {
+//                board[s[x]][x] = 'o';
+//                s[x]++;
 //            }
+           
+            System.out.print("player two drob where: ");
+            x = input.nextInt();
+            x--;
+
+            if (board[ROW_COUNT - 1][6 - x] == ' ') {
+
+                board[s[6 - x]][6 - x] = 'o';
+                s[6 - x]++;
+            }
 
             display(board);
             if (test(board, 'o') == true) {

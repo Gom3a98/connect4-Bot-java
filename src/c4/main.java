@@ -260,39 +260,46 @@ public class main {
 
             x = minimax(board, 5, (int) -Double.POSITIVE_INFINITY, (int) Double.POSITIVE_INFINITY, true)[0];
             System.out.println("Player one put on : " + x);
+            
             if (board[ROW_COUNT - 1][x] == ' ') {
                 board[s[x]][x] = 'x';
                 s[x]++;
             }
-            clearScreen();
+           
             display(board);
             if (test(board, 'x') == true) {
                 System.out.println("Player one Win");
                 return;
             }
-            System.out.print("player two drob where: ");
-            x = input.nextInt();
-            x--;
-
-            if (board[ROW_COUNT - 1][6 - x] == ' ') {
-
-                board[s[6 - x]][6 - x] = 'o';
-                s[6 - x]++;
+            
+             x = minimax(board, 10, (int) -Double.POSITIVE_INFINITY, (int) Double.POSITIVE_INFINITY, true)[0];
+          
+            System.out.println("Player two put on : " + x);
+            if (board[ROW_COUNT - 1][x] == ' ') {
+                board[s[x]][x] = 'o';
+                s[x]++;
             }
-    clearScreen();
+           
+//            System.out.print("player two drob where: ");
+//            x = input.nextInt();
+//            x--;
+//
+//            if (board[ROW_COUNT - 1][6 - x] == ' ') {
+//
+//                board[s[6 - x]][6 - x] = 'o';
+//                s[6 - x]++;
+//            }
+
             display(board);
-            if (test(board, 'y') == true) {
+            if (test(board, 'o') == true) {
                 System.out.println("Player Two Win");
                 return;
             }
         }
     }
-        public static void clearScreen() {  
-    System.out.print("\033[H\033[2J");  
-    System.out.flush();  
-} 
-    public static void display(char[][] board) {
 
+    public static void display(char[][] board) {
+       
         System.out.print("\n  1      2      3      4      5      6      7\n\n");
         for (int a = 5; a >= 0; a--) {
             for (int b = 6; b >= 0; b--) {

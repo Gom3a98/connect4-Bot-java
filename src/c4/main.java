@@ -282,7 +282,7 @@ public static char getcolor(int x , int y) throws AWTException{
              else if(color.getGreen() == 89 && color.getBlue() == 255 && color.getRed() == 0)
                     c='B';
             
-            robot.delay(1);
+            robot.delay(30);
             return c ;
 }
     public static void Insert(char[][] board, int[] s) throws AWTException {
@@ -329,13 +329,16 @@ public static char getcolor(int x , int y) throws AWTException{
                         board[i][j]='x';
                         s[j]++;
                         System.out.println(i+" "+j + "x red change");
+                   //     break ;
                     }
                     else if(getcolor(a,b)=='B'&&board[i][j]!='o')
                     {
                         board[i][j]='o';
                         s[j]++;
                         System.out.println(i+" "+j + "y blue change");
+                   //     break ;
                     }
+   
                     a+=75;
                 }
                 b+=75 ;

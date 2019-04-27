@@ -1,11 +1,18 @@
 package c4;
 
+import java.awt.AWTException;
+import java.awt.Color;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.io.IOException;
 import static java.lang.Math.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+//http://preview.codecanyon.net/item/connect-four-html5-game/full_screen_preview/20711434?_ga=2.28734841.479804214.1555435383-774087221.1555435383&fbclid=IwAR3J6BiuWYZnKXdP_IG_BKSuYnURefBkK15k0eeD64qJm5ACoNEK_RSFQfk
 public class main {
 
 //public static int counter=0 ; ;
@@ -248,28 +255,96 @@ public class main {
             arr[0] = column;
             arr[1] = value;
             return arr;
-
         }
-
     }
+public static void click(int x, int y) throws AWTException{
+    Robot bot = new Robot();
+    bot.mouseMove(x, y);    
+    bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+    bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+}
+public static char getcolor(int x , int y) throws AWTException{
+    Robot bot = new Robot();
+    bot.mouseMove(x, y);  
+    PointerInfo pointer;
+        pointer = MouseInfo.getPointerInfo();
+        Point coord = pointer.getLocation();
+        
+        char c = 'N';
+        Robot robot = new Robot();
+        robot.delay(10);
 
-    public static void Insert(char[][] board, int[] s) {
+            coord = MouseInfo.getPointerInfo().getLocation();       
+            Color color = robot.getPixelColor((int)coord.getX(), (int)coord.getY());
+            
+            if(color.getGreen() == 69 && color.getBlue() == 59 && color.getRed() == 239) 
+                c= 'R';
+             else if(color.getGreen() == 89 && color.getBlue() == 255 && color.getRed() == 0)
+                    c='B';
+            
+            robot.delay(1);
+            return c ;
+}
+    public static void Insert(char[][] board, int[] s) throws AWTException {
         while (true) {
             int x;
 
             x = minimax(board, 1, (int) -Double.POSITIVE_INFINITY, (int) Double.POSITIVE_INFINITY, true)[0];
-            System.out.println("Player one put on : " + x+6);
-            
+            System.out.println("///////////////////////////////////////////////////////////////////////////////Player one put on : " + (6-x));
+            //7-x
             if (board[ROW_COUNT - 1][x] == ' ') {
                 board[s[x]][x] = 'x';
                 s[x]++;
             }
-           
+            x=6-x;
+           if(x==0)
+               click(140,250);
+           else if(x==1)
+               click(215,250);
+           else if(x==2)
+               click(290,250);
+           else if(x==3)
+               click(365,250);
+           else if(x==4)
+               click(440,250);
+           else if(x==5)
+               click(515,250);
+           else if(x==6)
+               click(590,250);
             display(board);
-            if (test(board, 'x') == true) {
+             if (test(board, 'x') == true) {
                 System.out.println("Player one Win");
                 return;
             }
+            int a=140 , b=250 ;
+            for(int i = ROW_COUNT-1 ; i >=0 ;i--)
+            {
+                a= 140 ;
+                for(int j = COLUMN_COUNT-1 ; j >= 0 ;j--)
+                {
+                  //  System.out.println(i+" "+j + "none");
+                 //   board[i][j]= ' ';
+                    if(getcolor(a,b)=='R'&&board[i][j]!='x')
+                    {
+                        board[i][j]='x';
+                        s[j]++;
+                        System.out.println(i+" "+j + "x red change");
+                    }
+                    else if(getcolor(a,b)=='B'&&board[i][j]!='o')
+                    {
+                        board[i][j]='o';
+                        s[j]++;
+                        System.out.println(i+" "+j + "y blue change");
+                    }
+                    a+=75;
+                }
+                b+=75 ;
+            }
+            
+            display(board);
+            //x = input.nextInt() ;
+
+            
             
 //             x = minimax(board, 10, (int) -Double.POSITIVE_INFINITY, (int) Double.POSITIVE_INFINITY, true)[0];
 //          
@@ -279,17 +354,17 @@ public class main {
 //                s[x]++;
 //            }
            
-            System.out.print("player two drob where: ");
-            x = input.nextInt();
-            x--;
-
-            if (board[ROW_COUNT - 1][6 - x] == ' ') {
-
-                board[s[6 - x]][6 - x] = 'o';
-                s[6 - x]++;
-            }
-
-            display(board);
+//            System.out.print("player two drob where: ");
+//            x = input.nextInt();
+//            x--;
+//
+//            if (board[ROW_COUNT - 1][6 - x] == ' ') {
+//
+//                board[s[6 - x]][6 - x] = 'o';
+//                s[6 - x]++;
+//            }
+//
+//            display(board);
             if (test(board, 'o') == true) {
                 System.out.println("Player Two Win");
                 return;
@@ -343,7 +418,7 @@ public class main {
         return false;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AWTException {
         int[] s = {0, 0, 0, 0, 0, 0, 0};
         char[][] board = new char[6][7];
         for (int a = 0; a <= 5; a++) {

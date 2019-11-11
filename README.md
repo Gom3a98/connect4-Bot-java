@@ -1,4 +1,4 @@
-connect4-Bot-Python
+connect4-Bot-java
 
 Languages & Algorithms
-the bot is made in python using the MiniMax Algorithm.
+the bot is made in java using the MiniMax Algorithm.
